@@ -1,0 +1,18 @@
+{
+  "type": "Feature",
+  "properties": {
+    "route_id": "B7",
+    "name": "Crosstown Connector",
+    "color": "#2a9d8f"
+  },
+  "geometry": {
+    "type": "LineString",
+    "coordinates": [
+      [-74.014, 40.7211],
+      [-74.0082, 40.7196],
+      [-74.0034, 40.7184],
+      [-73.9986, 40.7167],
+      [-73.9935, 40.714]
+    ]
+  }
+}
