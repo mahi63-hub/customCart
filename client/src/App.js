@@ -1,8 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { NativeModules, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import MapView, { Polyline, UrlTile } from 'react-native-maps';
 import 'react-native-gesture-handler';
-import Constants from 'expo-constants';
 import { calculateETA } from './utils/eta';
 import { getReconnectDelay } from './utils/reconnect';
 import { useTransitWebSocket } from './hooks/useTransitWebSocket';
@@ -10,10 +9,13 @@ import AnimatedVehicleMarker from './components/AnimatedVehicleMarker';
 import VehicleDetailSheet from './components/VehicleDetailSheet';
 
 const getApiHost = () => {
-  const hostUri = Constants.expoConfig?.hostUri || Constants.manifest?.debuggerHost;
-  if (hostUri) {
-    const ip = hostUri.split(':')[0];
-    return `${ip}:3000`;
+  const scriptURL = NativeModules.SourceCode?.scriptURL;
+  if (scriptURL) {
+    const match = scriptURL.match(/^https?:\/\/([^:/]+)(:\d+)?/);
+    if (match) {
+      const ip = match[1];
+      return `${ip}:3000`;
+    }
   }
   return 'localhost:3000';
 };
